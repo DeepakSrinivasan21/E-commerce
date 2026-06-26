@@ -1,13 +1,24 @@
 function ProductCard({ product, cart, setCart }) {
     const addToCart = () => {
-        const exists = cart.find((item) => item.id === product.id);
+        const exists = cart.find(item => item.id === product.id);
 
         if (exists) {
-            alert("Item already added to the cart");
-            return;
+            setCart(
+                cart.map(item =>
+                    item.id === product.id
+                        ? { ...item, quantity: item.quantity + 1 }
+                        : item
+                )
+            );
+        } else {
+            setCart([
+                ...cart,
+                {
+                    ...product,
+                    quantity: 1,
+                },
+            ]);
         }
-
-        setCart([...cart, product]);
     };
 
     return (
